@@ -52,3 +52,8 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# SWP files
+*.swp
+
+# Local FS
+*.DS_Store

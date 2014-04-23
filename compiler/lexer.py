@@ -49,6 +49,7 @@ class Lexer(object):
             self._rules = rules
             self._pattern = join_regex(rules)
             self._re = re.compile(self._pattern, flags=re.IGNORECASE)
+
     def tokenizer(self):
         """ Returns a generator object which yields a token class
         as the lexer continues to read in characters and match

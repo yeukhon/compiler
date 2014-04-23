@@ -4,6 +4,7 @@
 
 import collections
 import re
+import tokens
 
 INVALID_MSG = """\n
 File "<{}>", line {}, starting at column {}
@@ -61,11 +62,11 @@ class Lexer(object):
                 # The match, if any, should be found as long as possible
                 # starting from self._colno position in the current line
                 match = self._re.match(line, self._colno)
-                if match:                    
+                if match:
                     type = match.lastgroup
-                    if type != "IGNORE":
-                        token = Token(type, match.group(), self._lineno,
-                                      self._colno)
+                    if type != tokens.IGNORE:
+                        token = Token(type, match.group(),
+                                      self._lineno, self._colno)
                         yield token
                     self._colno = match.end()+1
                 else:

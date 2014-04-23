@@ -40,7 +40,13 @@ tk_SEMI         = r"\;"
 tk_INTEGER      = r"\d+"
 tk_REAL         = r"\d+\.\d*"
 
-# Strings literals
+# String literal
+# Pascal string literal is enclosed in single quotes pair (less headache)
+# See: http://pascal.comsci.us/tutorial/literal/string.html
+# and: http://stackoverflow.com/a/2039820/230884
+tk_STRING       = r'\'(\\.|[^"])*\''
+
+# General identififer
 tk_ID           = r"[a-zA-Z_][a-zA-Z0-9_]*"
 
 # Whitespaces and newlines are to be ignored by the lexer (comments too)

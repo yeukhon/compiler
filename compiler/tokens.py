@@ -4,7 +4,7 @@
 
 import collections
 
-RESERVED = [
+RESERVED_KWS = [
     "program",
     "begin",
     "end",
@@ -49,6 +49,13 @@ tk_WSPACE       = r"[\s\t\n]+"
 IGNORE = "WSPACE"
 
 TOKEN_CLASSES = []
+
+# For uniformity, we add a token class for reserved keywords.
+# This is placed ahead of ID regex has order of precendence
+# advantage so that we don't have to do branching in the lexer.
+# Either way is fine.
+TOKEN_CLASSES.append(("RESERVED", "|".join(RESERVED_KWS)))
+
 for name, value in globals().items():
     if name.startswith("tk_"):
         TOKEN_CLASSES.append((name[3:], value))

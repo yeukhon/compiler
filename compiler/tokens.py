@@ -4,14 +4,51 @@
 
 import collections
 
-TK = collections.namedtuple("TK", ["id", "name", "regex"])
+RESERVED = [
+    "program",
+    "begin",
+    "end",
+    "var"
+]
 
-IGNORE = TK(0, "IGNORE", "[\s\t\n]+")
-ID = TK(1, "IDENTIFIER", "[a-zA-Z_][a-zA-Z0-9_]*")
-EQUAL = TK(2, "EQUAL", "=")
-INTEGER = TK(3, "INTEGER", "\d+")
+# Operators
+tk_PLUS         = r"\+"
+tk_SUB          = r"-"
+tk_MUL          = r"\*"
+tk_DIV          = r"/"
+tk_GT           = r">"
+tk_LT           = r"<"
+tk_GE           = r">="
+tk_LE           = r"<="
+tk_EQUAL        = r"=="
+tk_NOTEQUAL     = r"<>"
+tk_ASSIGN       = r":=|="
+
+# single-char operators/separators
+tk_COLON        = r":"
+tk_LPARN        = r"\("
+tk_RPARN        = r"\)"
+tk_LBRACK       = r"\["
+tk_RBRACK       = r"\]"
+tk_LBRACE       = r"\{"
+tk_RBRACE       = r"\}"
+tk_DOT          = r"\."
+tk_COMMA        = r"\,"
+tk_SEMI         = r"\;"
+
+# Numbers literals
+tk_INTEGER      = r"\d+"
+tk_REAL         = r"\d+\.\d*"
+
+# Strings literals
+tk_ID           = r"[a-zA-Z_][a-zA-Z0-9_]*"
+
+# Whitespaces and newlines are to be ignored by the lexer (comments too)
+tk_WSPACE       = r"[\s\t\n]+"
+
+IGNORE = "WSPACE"
 
 TOKEN_CLASSES = []
 for name, value in globals().items():
-    if isinstance(value, TK):
-        TOKEN_CLASSES.append((value.name, value.regex))
+    if name.startswith("tk_"):
+        TOKEN_CLASSES.append((name[3:], value))

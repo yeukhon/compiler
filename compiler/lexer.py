@@ -47,7 +47,8 @@ class Lexer(object):
             self._colno = 0
 
             self._rules = rules
-            self._re = re.compile(join_regex(rules))
+            self._pattern = join_regex(rules)
+            self._re = re.compile(self._pattern)
 
     def tokenizer(self):
         """ Returns a generator object which yields a token class
@@ -68,7 +69,7 @@ class Lexer(object):
                         token = Token(type, match.group(),
                                       self._lineno, self._colno)
                         yield token
-                    self._colno = match.end()+1
+                    self._colno = match.end()
                 else:
                     # Close file descriptor
                     self._fstream.close()
@@ -76,3 +77,8 @@ class Lexer(object):
                         self._lineno, self._colno, line))
         # Close the file descriptor
         self._fstream.close()
+
+if __name__ == "__main__":
+    lexer = Lexer(tokens.TOKEN_CLASSES, file="local.input")
+    for token in lexer.tokenizer():
+        print token
